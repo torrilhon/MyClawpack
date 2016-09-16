@@ -75,7 +75,7 @@ def setrun(claw_pkg='amrclaw'):
     # ---------------
 
     # Number of equations in the system:
-    clawdata.num_eqn = 1
+    clawdata.num_eqn = 2
 
     # Number of auxiliary variables in the aux array (initialized in setaux)
     clawdata.num_aux = 0
@@ -164,9 +164,9 @@ def setrun(claw_pkg='amrclaw'):
     clawdata.dt_max = 1e+99
     
     # Desired Courant number if variable dt used 
-    clawdata.cfl_desired = 0.9
+    clawdata.cfl_desired = 0.45
     # max Courant number to allow without retaking step with a smaller dt:
-    clawdata.cfl_max = 1.0
+    clawdata.cfl_max = 0.5
     
     # Maximum number of time steps to allow between output times:
     clawdata.steps_max = 100000
@@ -183,14 +183,14 @@ def setrun(claw_pkg='amrclaw'):
     clawdata.dimensional_split = 'unsplit'
     
     # For unsplit method, transverse_waves can be 
-    #  0 or 'none'      ==> donor cell (only normal solver used)
+    #  0 or 'none'      ==> donor cell (only normal solver used, CFL <= 0.5)
     #  1 or 'increment' ==> corner transport of waves
     #  2 or 'all'       ==> corner transport of 2nd order corrections too
-    clawdata.transverse_waves = 'all'
+    clawdata.transverse_waves = 'none'
     
     
     # Number of waves in the Riemann solution:
-    clawdata.num_waves = 1
+    clawdata.num_waves = 2
     
     # List of limiters to use for each wave family:  
     # Required:  len(limiter) == num_waves
@@ -200,7 +200,7 @@ def setrun(claw_pkg='amrclaw'):
     #   2 or 'superbee' ==> superbee
     #   3 or 'vanleer'  ==> van Leer
     #   4 or 'mc'       ==> MC limiter
-    clawdata.limiter = ['vanleer']
+    clawdata.limiter = ['vanleer','vanleer']
     
     clawdata.use_fwaves = False    # True ==> use f-wave version of algorithms
     

@@ -45,16 +45,26 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
 
 !$$$      do 30 i = 2-mbc, mx+mbc-1
     do 30 i = 2-mbc, mx+mbc
+!       # first wave
         wave(1,1,i) = ql(1,i) - qr(1,i-1)
+        wave(2,1,i) = 0.d0
+!       # second wave
+        wave(1,2,i) = 0.d0
+        wave(2,2,i) = ql(2,i) - qr(2,i-1)
+
         if (ixy == 1) then
-            s(1,i) = u
+            s(1,i) = 2*u
+            s(2,i) = u/2
         else
             s(1,i) = v
+            s(2,i) = v
         endif
     
-    !        # flux differences:
-        amdq(1,i) = dmin1(s(1,i), 0.d0) * wave(1,1,i)
-        apdq(1,i) = dmax1(s(1,i), 0.d0) * wave(1,1,i)
+!       # flux differences:
+        do 31 m = 1, meqn
+            amdq(m,i) = dmin1(s(1,i), 0.d0) * wave(m,1,i) + dmin1(s(2,i), 0.d0) * wave(m,2,i)
+            apdq(m,i) = dmax1(s(1,i), 0.d0) * wave(m,1,i) + dmax1(s(2,i), 0.d0) * wave(m,2,i)
+        31 END DO
     
     30 END DO
 

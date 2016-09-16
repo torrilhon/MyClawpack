@@ -20,6 +20,10 @@ subroutine rpt2(ixy,imp,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,aux1,aux2,aux3,asdq,b
 !     # transverse wave speeds have been computed in rpn2
 !     # maux=0 and aux arrays are unused in this example.
 
+      write(6,*) '*** ERROR *** transverse flux not implemented yet !!!!!!!!!!!!!!!!!!!!'
+      stop
+
+
     if (ixy == 1) then
         stran = v
     else
@@ -31,7 +35,9 @@ subroutine rpt2(ixy,imp,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,aux1,aux2,aux3,asdq,b
           
     do 10 i = 2-mbc, mx+mbc
         bmasdq(1,i) = stranm * asdq(1,i)
+        bmasdq(2,i) = stranm * asdq(2,i)
         bpasdq(1,i) = stranp * asdq(1,i)
+        bpasdq(2,i) = stranp * asdq(2,i)
     10 END DO
 
     return

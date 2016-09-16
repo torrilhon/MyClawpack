@@ -121,6 +121,7 @@ c
              t1 = time + tau1         ! time at which to evaluate BC 
              y1 = ycell + vbar*tau1   ! y at which to evaluate BC
              val(1,nxl,j) = qtrue(0.d0,y1,0.d0*t1)
+             val(2,nxl,j) = qtrue(0.d0,y1,0.d0*t1)
              endif
          if (nxl == 2) then
              ! second ghost cell:
@@ -128,6 +129,7 @@ c
              t2 = time + tau2         ! time at which to evaluate BC 
              y2 = ycell + vbar*tau2   ! y at which to evaluate BC
              val(1,1,j) = qtrue(0.d0,y2,0.d0*t2)
+             val(2,1,j) = qtrue(0.d0,y2,0.d0*t2)
              endif
           enddo
       
@@ -242,6 +244,7 @@ c
              t1 = time + tau1         ! time at which to evaluate BC 
              x1 = xcell + vbar*tau1   ! x at which to evaluate BC
              val(1,i,nyb) = qtrue(x1,0.d0,0.d0*t1)
+             val(2,i,nyb) = qtrue(x1,0.d0,0.d0*t1)
              endif
          if (nyb == 2) then
              ! second ghost cell:
@@ -249,6 +252,7 @@ c
              t2 = time + tau2         ! time at which to evaluate BC 
              x2 = xcell + ubar*tau2   ! x at which to evaluate BC
              val(1,i,1) = qtrue(x2,0.d0,0.d0*t2)
+             val(2,i,1) = qtrue(x2,0.d0,0.d0*t2)
              endif
           enddo
       go to 399

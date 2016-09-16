@@ -21,11 +21,12 @@ c
 
       do 10 i=1,mx
        do 10 j=1,my
-         qstar(1) = q(1,i,j) - dt2/tau * q(1,i,j)
+        do 10 m=1,meqn
+         qstar(m) = q(m,i,j) - dt2/tau * q(m,i,j)
 c
 c        # second stage
 c
-         q(1,i,j) = q(1,i,j) - dt/tau * qstar(1)
+         q(m,i,j) = q(m,i,j) - dt/tau * qstar(m)
    10    continue
 
       return

@@ -44,6 +44,26 @@ def setplot(plotdata):
     plotitem.amr_celledges_show = [0]  
     plotitem.amr_patchedges_show = [0]
 
+    # Figure for pcolor plot
+    plotfigure = plotdata.new_plotfigure(name='pcolor2', figno=10)
+
+    # Set up for axes in this figure:
+    plotaxes = plotfigure.new_plotaxes()
+    plotaxes.xlimits = [0,1]
+    plotaxes.ylimits = [0,1]
+    plotaxes.title = 'Solution'
+    plotaxes.scaled = True
+
+    # Set up for item on these axes:
+    plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
+    plotitem.plot_var = 1
+    plotitem.pcolor_cmap = colormaps.red_yellow_blue
+    plotitem.pcolor_cmin = -1.
+    plotitem.pcolor_cmax = 1.
+    plotitem.add_colorbar = True
+
+    plotitem.amr_celledges_show = [0]  
+    plotitem.amr_patchedges_show = [0]
 
     # Figure for contour plot
     plotfigure = plotdata.new_plotfigure(name='contour', figno=1)

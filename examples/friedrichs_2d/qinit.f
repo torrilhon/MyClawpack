@@ -19,6 +19,7 @@ c     ---------------------------
          do 20 i=1,mx
             xi = xlower + (i-0.5d0)*dx
             q(1,i,j) = qtrue(xi,yj,0.d0)
+            q(2,i,j) = qtrue(xi,yj,0.d0)
    20    continue
 
       return
