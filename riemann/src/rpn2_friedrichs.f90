@@ -45,28 +45,54 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
 
 !$$$      do 30 i = 2-mbc, mx+mbc-1
     do 30 i = 2-mbc, mx+mbc
-!       # first wave
-        wave(1,1,i) = ql(1,i) - qr(1,i-1)
-        wave(2,1,i) = 0.d0
-!       # second wave
-        wave(1,2,i) = 0.d0
-        wave(2,2,i) = ql(2,i) - qr(2,i-1)
-
+        p  = ql(1,i) - qr(1,i-1)
+        ux = ql(2,i) - qr(2,i-1)
+        uy = ql(3,i) - qr(3,i-1)
+        
         if (ixy == 1) then
-            s(1,i) = 2*u
-            s(2,i) = u/2
-        else
-            s(1,i) = v
-            s(2,i) = v
+  !       # first wave
+          wave(1,1,i) = 0.d5*(p-ux)
+          wave(2,1,i) = 0.d5*(-p+ux)
+          wave(3,1,i) = 0.d0
+  !       # second wave
+          wave(1,2,i) = 0.d5*(p+ux)
+          wave(2,2,i) = 0.d5*(p+ux)
+          wave(3,2,i) = 0.d0
+  !       # speeds
+          s(1,i) = -1.d0
+          s(2,i) = 1.d0
+        end if
+        
+        if (ixy == 2) then
+  !       # first wave
+          wave(1,1,i) = 0.d5*(p-uy)
+          wave(2,1,i) = 0.d0
+          wave(3,1,i) = 0.d5*(-p+uy)
+  !       # second wave
+          wave(1,2,i) = 0.d5*(p+uy)
+          wave(2,2,i) = 0.d0
+          wave(3,2,i) = 0.d5*(p+uy)
+  !       # speeds
+          s(1,i) = -1.d0
+          s(2,i) = 1.d0
         endif
     
 !       # flux differences:
-        do 31 m = 1, meqn
-            amdq(m,i) = dmin1(s(1,i), 0.d0) * wave(m,1,i) + dmin1(s(2,i), 0.d0) * wave(m,2,i)
-            apdq(m,i) = dmax1(s(1,i), 0.d0) * wave(m,1,i) + dmax1(s(2,i), 0.d0) * wave(m,2,i)
-        31 END DO
+        do m = 1, meqn
+            amdq(m,i) = 0.d0
+            apdq(m,i) = 0.d0
+        end do
+        do k = 1, mwaves
+          do m = 1, meqn
+              amdq(m,i) = amdq(m,i) + dmin1(s(k,i),0.d0) * wave(m,k,i)
+              apdq(m,i) = apdq(m,i) + dmax1(s(k,i),0.d0) * wave(m,k,i)
+          end do
+        end do
     
     30 END DO
 
     return
     end subroutine rpn2
+
+
+

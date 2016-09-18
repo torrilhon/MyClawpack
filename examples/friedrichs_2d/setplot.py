@@ -24,7 +24,7 @@ def setplot(plotdata):
 
     
     # Figure for pcolor plot
-    plotfigure = plotdata.new_plotfigure(name='pcolor', figno=0)
+    plotfigure = plotdata.new_plotfigure(name='pcolor1', figno=0)
 
     # Set up for axes in this figure:
     plotaxes = plotfigure.new_plotaxes()
@@ -56,7 +56,7 @@ def setplot(plotdata):
 
     # Set up for item on these axes:
     plotitem = plotaxes.new_plotitem(plot_type='2d_pcolor')
-    plotitem.plot_var = 1
+    plotitem.plot_var = 2
     plotitem.pcolor_cmap = colormaps.red_yellow_blue
     plotitem.pcolor_cmin = -1.
     plotitem.pcolor_cmax = 1.
@@ -65,44 +65,6 @@ def setplot(plotdata):
     plotitem.amr_celledges_show = [0]  
     plotitem.amr_patchedges_show = [0]
 
-    # Figure for contour plot
-    plotfigure = plotdata.new_plotfigure(name='contour', figno=1)
-
-    # Set up for axes in this figure:
-    plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [0,1]
-    plotaxes.ylimits = [0,1]
-    plotaxes.title = 'Solution'
-    plotaxes.scaled = True
-    plotaxes.afteraxes = addgauges
-
-    # Set up for item on these axes:
-    plotitem = plotaxes.new_plotitem(plot_type='2d_contour')
-    plotitem.plot_var = 0
-    plotitem.contour_nlevels = 20
-    plotitem.contour_min = -0.99
-    plotitem.contour_max = 0.99
-    plotitem.amr_contour_colors = ['r','g','b']  # color on each level
-    plotitem.amr_patch_bgcolor = ['#ffeeee', '#eeeeff', '#eeffee']
-    plotitem.celledges_show = 0
-    plotitem.patchedges_show = 0
-
-
-    # Figure for grid cells
-    plotfigure = plotdata.new_plotfigure(name='cells', figno=2)
-
-    # Set up for axes in this figure:
-    plotaxes = plotfigure.new_plotaxes()
-    plotaxes.xlimits = [0,1]
-    plotaxes.ylimits = [0,1]
-    plotaxes.title = 'Grid patches'
-    plotaxes.scaled = True
-
-    # Set up for item on these axes:
-    plotitem = plotaxes.new_plotitem(plot_type='2d_patch')
-    plotitem.amr_patch_bgcolor = ['#ffeeee', '#eeeeff', '#eeffee']
-    plotitem.amr_celledges_show = [1,0,0]
-    plotitem.amr_patchedges_show = [1]
 
     #-----------------------------------------
     # Figures for gauges

@@ -108,6 +108,7 @@ c     # number of grid cells from this patch lying outside physical domain:
 c
       go to (100,110,120,130) mthbc(1)+1
 c
+c     # user definition:                           ** LEFT **
   100 continue
       if (ubar < 0.1d0*vbar) then
          write(6,*) 'inflow BCs at left boundary assume ubar >= vbar/10'
@@ -120,23 +121,25 @@ c
              tau1 = hx / (2.d0*ubar)
              t1 = time + tau1         ! time at which to evaluate BC 
              y1 = ycell + vbar*tau1   ! y at which to evaluate BC
-             val(1,nxl,j) = qtrue(0.d0,y1,0.d0*t1)
-             val(2,nxl,j) = qtrue(0.d0,y1,0.d0*t1)
+             do m=1,meqn
+               val(m,nxl,j) = qtrue(m,0.d0,y1,0.d0*t1)
+             end do
              endif
          if (nxl == 2) then
              ! second ghost cell:
              tau2 = 3.d0 * hx / (2.d0*ubar)
              t2 = time + tau2         ! time at which to evaluate BC 
              y2 = ycell + vbar*tau2   ! y at which to evaluate BC
-             val(1,1,j) = qtrue(0.d0,y2,0.d0*t2)
-             val(2,1,j) = qtrue(0.d0,y2,0.d0*t2)
+             do m=1,meqn
+               val(m,1,j) = qtrue(m,0.d0,y2,0.d0*t2)
+             end do
              endif
           enddo
       
       go to 199
 c
   110 continue
-c     # zero-order extrapolation:
+c     # zero-order extrapolation:      ** LEFT **
       do 115 j = 1,ncol
          do 115 i=1,nxl
             do 115 m=1,meqn
@@ -149,7 +152,7 @@ c     # periodic:   handled elsewhere in amr
       go to 199
 
   130 continue
-c     # solid wall (assumes 2'nd component is velocity or momentum in x):
+c     # solid wall (assumes 2'nd component is velocity or momentum in x):      ** LEFT **
       do 135 j = 1,ncol
          do 135 i=1,nxl
             do 135 m=1,meqn
@@ -181,14 +184,14 @@ c
       go to (200,210,220,230) mthbc(2)+1
 c
   200 continue
-c     # user-specified boundary conditions go here in place of error output
+c     # user-specified boundary conditions go here in place of error output      ** RIGHT **
       write(6,*) 
      &   '*** ERROR *** mthbc(2)=0 and no BCs specified in bc2amr'
       stop
       go to 299
 
   210 continue
-c     # zero-order extrapolation:
+c     # zero-order extrapolation:      ** RIGHT **
       do 215 j = 1,ncol
          do 215 i=ibeg,nrow
             do 215 m=1,meqn
@@ -201,7 +204,7 @@ c     # periodic:   handled elsewhere in amr
       go to 299
 
   230 continue
-c     # solid wall (assumes 2'nd component is velocity or momentum in x):
+c     # solid wall (assumes 2'nd component is velocity or momentum in x):      ** RIGHT **
       do 235 j = 1,ncol
          do 235 i=ibeg,nrow
             do 235 m=1,meqn
@@ -231,6 +234,7 @@ c     # number of grid cells lying outside physical domain:
 c
       go to (300,310,320,330) mthbc(3)+1
 c
+c     # user definition:      ** BOTTOM **
   300 continue
       if (vbar < 0.1d0*ubar) then
          write(6,*) 'inflow BCs at bottom assume vbar >= ubar/10'
@@ -243,22 +247,24 @@ c
              tau1 = hy / (2.d0*vbar)
              t1 = time + tau1         ! time at which to evaluate BC 
              x1 = xcell + vbar*tau1   ! x at which to evaluate BC
-             val(1,i,nyb) = qtrue(x1,0.d0,0.d0*t1)
-             val(2,i,nyb) = qtrue(x1,0.d0,0.d0*t1)
+             do m=1,meqn
+               val(m,i,nyb) = qtrue(m,x1,0.d0,0.d0*t1)
+             end do
              endif
          if (nyb == 2) then
              ! second ghost cell:
              tau2 = 3.d0 * hy / (2.d0*vbar)
              t2 = time + tau2         ! time at which to evaluate BC 
              x2 = xcell + ubar*tau2   ! x at which to evaluate BC
-             val(1,i,1) = qtrue(x2,0.d0,0.d0*t2)
-             val(2,i,1) = qtrue(x2,0.d0,0.d0*t2)
+             do m=1,meqn
+               val(m,i,1) = qtrue(m,x2,0.d0,0.d0*t2)
+             end do
              endif
           enddo
       go to 399
 c
   310 continue
-c     # zero-order extrapolation:
+c     # zero-order extrapolation:      ** BOTTOM **
       do 315 j=1,nyb
          do 315 i=1,nrow
             do 315 m=1,meqn
@@ -271,7 +277,7 @@ c     # periodic:   handled elsewhere in amr
       go to 399
 
   330 continue
-c     # solid wall (assumes 3'rd component is velocity or momentum in y):
+c     # solid wall (assumes 3'rd component is velocity or momentum in y):      ** BOTTOM **
       do 335 j=1,nyb
          do 335 i=1,nrow
             do 335 m=1,meqn
@@ -303,14 +309,14 @@ c
       go to (400,410,420,430) mthbc(4)+1
 c
   400 continue
-c     # user-specified boundary conditions go here in place of error output
+c     # user-specified boundary conditions go here in place of error output      ** TOP **
       write(6,*) 
      &   '*** ERROR *** mthbc(4)=0 and no BCs specified in bc2amr'
       stop
       go to 499
 
   410 continue
-c     # zero-order extrapolation:
+c     # zero-order extrapolation:      ** TOP **
       do 415 j=jbeg,ncol
          do 415 i=1,nrow
             do 415 m=1,meqn
@@ -323,7 +329,7 @@ c     # periodic:   handled elsewhere in amr
       go to 499
 
   430 continue
-c     # solid wall (assumes 3'rd component is velocity or momentum in y):
+c     # solid wall (assumes 3'rd component is velocity or momentum in y):      ** TOP **
       do 435 j=jbeg,ncol
          do 435 i=1,nrow
             do 435 m=1,meqn
@@ -340,3 +346,6 @@ c     # negate the normal velocity:
 
       return
       end
+
+
+

@@ -12,7 +12,7 @@ c     # source terms for 2d advaction equations
 c
       dimension qstar(meqn)
       common /cparam/ ubar,vbar
-      tau = 0.1
+      tau = 100000.2
 c
 c     # 2-stage Runge-Kutta method
 c
