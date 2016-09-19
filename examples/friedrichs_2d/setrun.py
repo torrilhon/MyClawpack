@@ -164,9 +164,9 @@ def setrun(claw_pkg='amrclaw'):
     clawdata.dt_max = 1e+99
     
     # Desired Courant number if variable dt used 
-    clawdata.cfl_desired = 0.45
+    clawdata.cfl_desired = 0.9
     # max Courant number to allow without retaking step with a smaller dt:
-    clawdata.cfl_max = 0.5
+    clawdata.cfl_max = 1.0
     
     # Maximum number of time steps to allow between output times:
     clawdata.steps_max = 100000
@@ -180,10 +180,10 @@ def setrun(claw_pkg='amrclaw'):
     clawdata.order = 2
     
     # Use dimensional splitting?
-    clawdata.dimensional_split = 'unsplit'
+    clawdata.dimensional_split = 1
     
     # For unsplit method, transverse_waves can be 
-    #  0 or 'none'      ==> donor cell (only normal solver used, CFL <= 0.5)
+    #  0 or 'none'      ==> donor cell 
     #  1 or 'increment' ==> corner transport of waves
     #  2 or 'all'       ==> corner transport of 2nd order corrections too
     clawdata.transverse_waves = 'none'
@@ -224,11 +224,11 @@ def setrun(claw_pkg='amrclaw'):
     #   2 or 'periodic' => periodic (must specify this at both boundaries)
     #   3 or 'wall'     => solid wall for systems where q(2) is normal velocity
     
-    clawdata.bc_lower[0] = 'extrap'   # at xlower
-    clawdata.bc_upper[0] = 'extrap'   # at xupper
+    clawdata.bc_lower[0] = 'wall'   # at xlower
+    clawdata.bc_upper[0] = 'wall'   # at xupper
 
-    clawdata.bc_lower[1] = 'extrap'   # at ylower
-    clawdata.bc_upper[1] = 'extrap'   # at yupper
+    clawdata.bc_lower[1] = 'wall'   # at ylower
+    clawdata.bc_upper[1] = 'wall'   # at yupper
                          
 
     # ---------------

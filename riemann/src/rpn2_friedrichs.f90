@@ -51,12 +51,12 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
         
         if (ixy == 1) then
   !       # first wave
-          wave(1,1,i) = 0.d5*(p-ux)
-          wave(2,1,i) = 0.d5*(-p+ux)
+          wave(1,1,i) = 0.5*(p-ux)
+          wave(2,1,i) = 0.5*(-p+ux)
           wave(3,1,i) = 0.d0
   !       # second wave
-          wave(1,2,i) = 0.d5*(p+ux)
-          wave(2,2,i) = 0.d5*(p+ux)
+          wave(1,2,i) = 0.5*(p+ux)
+          wave(2,2,i) = 0.5*(p+ux)
           wave(3,2,i) = 0.d0
   !       # speeds
           s(1,i) = -1.d0
@@ -65,13 +65,13 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
         
         if (ixy == 2) then
   !       # first wave
-          wave(1,1,i) = 0.d5*(p-uy)
+          wave(1,1,i) = 0.5*(p-uy)
           wave(2,1,i) = 0.d0
-          wave(3,1,i) = 0.d5*(-p+uy)
+          wave(3,1,i) = 0.5*(-p+uy)
   !       # second wave
-          wave(1,2,i) = 0.d5*(p+uy)
+          wave(1,2,i) = 0.5*(p+uy)
           wave(2,2,i) = 0.d0
-          wave(3,2,i) = 0.d5*(p+uy)
+          wave(3,2,i) = 0.5*(p+uy)
   !       # speeds
           s(1,i) = -1.d0
           s(2,i) = 1.d0
