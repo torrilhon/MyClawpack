@@ -56,6 +56,7 @@ SOURCES = \
   setprob.f \
   bc2amr.f \
   src2.f \
+  production.f \
   $(MYCLAW)/riemann/src/rpn2_friedrichs.f \
   $(MYCLAW)/riemann/src/rpt2_friedrichs.f \
 

@@ -2,15 +2,6 @@
 subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apdq)
 ! =====================================================
 
-! Riemann solver for the sample scalar equation
-!  q_t + u*q_x + v*q_y = 0
-
-! waves: 1
-! equations: 1
-
-! Conserved quantities:
-!       1 q
-
 ! On input, ql contains the state vector at the left edge of each cell
 !           qr contains the state vector at the right edge of each cell
 
@@ -42,8 +33,6 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
     dimension  apdq(meqn, 1-mbc:maxm+mbc)
     dimension  amdq(meqn, 1-mbc:maxm+mbc)
 
-
-!$$$      do 30 i = 2-mbc, mx+mbc-1
     do 30 i = 2-mbc, mx+mbc
         p  = ql(1,i) - qr(1,i-1)
         ux = ql(2,i) - qr(2,i-1)
