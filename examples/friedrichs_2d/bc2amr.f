@@ -108,34 +108,17 @@ c     # number of grid cells from this patch lying outside physical domain:
 c
       go to (100,110,120,130) mthbc(1)+1
 c
-c     # user definition:                           ** LEFT **
   100 continue
-      if (ubar < 0.1d0*vbar) then
-         write(6,*) 'inflow BCs at left boundary assume ubar >= vbar/10'
-         stop
-         endif
+c     # user definition:  (2 ghostcells required !!!)              ** LEFT **
       do j = 1,ncol
          ycell = ylo_patch + (j-0.5d0)*hy
-         if (nxl >= 1) then
-             ! first ghost cell:
-             tau1 = hx / (2.d0*ubar)
-             t1 = time + tau1         ! time at which to evaluate BC 
-             y1 = ycell + vbar*tau1   ! y at which to evaluate BC
-             do m=1,meqn
-               val(m,nxl,j) = qtrue(m,0.d0,y1,0.d0*t1)
-             end do
-             endif
-         if (nxl == 2) then
-             ! second ghost cell:
-             tau2 = 3.d0 * hx / (2.d0*ubar)
-             t2 = time + tau2         ! time at which to evaluate BC 
-             y2 = ycell + vbar*tau2   ! y at which to evaluate BC
-             do m=1,meqn
-               val(m,1,j) = qtrue(m,0.d0,y2,0.d0*t2)
-             end do
-             endif
-          enddo
-      
+         do m=1,meqn
+            val(m,nxl,j) = qtrue(m,0.d0,ycell,0.d0)
+         end do
+         do m=1,meqn
+            val(m,1,j) = qtrue(m,0.d0,ycell,0.d0)
+         end do
+      enddo      
       go to 199
 c
   110 continue
@@ -184,10 +167,16 @@ c
       go to (200,210,220,230) mthbc(2)+1
 c
   200 continue
-c     # user-specified boundary conditions go here in place of error output      ** RIGHT **
-      write(6,*) 
-     &   '*** ERROR *** mthbc(2)=0 and no BCs specified in bc2amr'
-      stop
+c     # user definition:  (2 ghostcells required !!!)              ** RIGHT **
+      do j = 1,ncol
+         ycell = ylo_patch + (j-0.5d0)*hy
+         do m=1,meqn
+            val(m,ibeg,j) = qtrue(m,0.d0,ycell,0.d0)
+         end do
+         do m=1,meqn
+            val(m,nrow,j) = qtrue(m,0.d0,ycell,0.d0)
+         end do
+      enddo      
       go to 299
 
   210 continue
@@ -234,33 +223,17 @@ c     # number of grid cells lying outside physical domain:
 c
       go to (300,310,320,330) mthbc(3)+1
 c
-c     # user definition:      ** BOTTOM **
   300 continue
-      if (vbar < 0.1d0*ubar) then
-         write(6,*) 'inflow BCs at bottom assume vbar >= ubar/10'
-         stop
-         endif
+c     # user definition:   (2 ghostcells required !!!              ** BOTTOM **
       do i = 1,nrow
          xcell = xlo_patch + (i-0.5d0)*hx
-         if (nyb >= 1) then
-             ! first ghost cell:
-             tau1 = hy / (2.d0*vbar)
-             t1 = time + tau1         ! time at which to evaluate BC 
-             x1 = xcell + vbar*tau1   ! x at which to evaluate BC
-             do m=1,meqn
-               val(m,i,nyb) = qtrue(m,x1,0.d0,0.d0*t1)
-             end do
-             endif
-         if (nyb == 2) then
-             ! second ghost cell:
-             tau2 = 3.d0 * hy / (2.d0*vbar)
-             t2 = time + tau2         ! time at which to evaluate BC 
-             x2 = xcell + ubar*tau2   ! x at which to evaluate BC
-             do m=1,meqn
-               val(m,i,1) = qtrue(m,x2,0.d0,0.d0*t2)
-             end do
-             endif
-          enddo
+         do m=1,meqn
+            val(m,i,nyb) = qtrue(m,xcell,0.d0,0.d0)
+         end do
+         do m=1,meqn
+            val(m,i,1) = qtrue(m,xcell,0.d0,0.d0)
+         end do
+      enddo
       go to 399
 c
   310 continue
@@ -309,10 +282,16 @@ c
       go to (400,410,420,430) mthbc(4)+1
 c
   400 continue
-c     # user-specified boundary conditions go here in place of error output      ** TOP **
-      write(6,*) 
-     &   '*** ERROR *** mthbc(4)=0 and no BCs specified in bc2amr'
-      stop
+c     # user definition:   (2 ghostcells required !!!              ** TOP **
+      do i = 1,nrow
+         xcell = xlo_patch + (i-0.5d0)*hx
+         do m=1,meqn
+            val(m,i,jbeg) = qtrue(m,xcell,0.d0,0.d0)
+         end do
+         do m=1,meqn
+            val(m,i,ncol) = qtrue(m,xcell,0.d0,0.d0)
+         end do
+      enddo
       go to 499
 
   410 continue
