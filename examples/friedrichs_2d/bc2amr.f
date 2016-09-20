@@ -114,9 +114,7 @@ c     # user definition:  (2 ghostcells required !!!)              ** LEFT **
          ycell = ylo_patch + (j-0.5d0)*hy
          do m=1,meqn
             val(m,nxl,j) = qtrue(m,0.d0,ycell,0.d0)
-         end do
-         do m=1,meqn
-            val(m,1,j) = qtrue(m,0.d0,ycell,0.d0)
+            val(m,1,j) = val(m,nxl,j)
          end do
       enddo      
       go to 199
@@ -172,9 +170,7 @@ c     # user definition:  (2 ghostcells required !!!)              ** RIGHT **
          ycell = ylo_patch + (j-0.5d0)*hy
          do m=1,meqn
             val(m,ibeg,j) = qtrue(m,0.d0,ycell,0.d0)
-         end do
-         do m=1,meqn
-            val(m,nrow,j) = qtrue(m,0.d0,ycell,0.d0)
+            val(m,nrow,j) = val(m,ibeg,j)
          end do
       enddo      
       go to 299
@@ -229,9 +225,7 @@ c     # user definition:   (2 ghostcells required !!!              ** BOTTOM **
          xcell = xlo_patch + (i-0.5d0)*hx
          do m=1,meqn
             val(m,i,nyb) = qtrue(m,xcell,0.d0,0.d0)
-         end do
-         do m=1,meqn
-            val(m,i,1) = qtrue(m,xcell,0.d0,0.d0)
+            val(m,i,1) = val(m,i,nyb)
          end do
       enddo
       go to 399
@@ -287,9 +281,7 @@ c     # user definition:   (2 ghostcells required !!!              ** TOP **
          xcell = xlo_patch + (i-0.5d0)*hx
          do m=1,meqn
             val(m,i,jbeg) = qtrue(m,xcell,0.d0,0.d0)
-         end do
-         do m=1,meqn
-            val(m,i,ncol) = qtrue(m,xcell,0.d0,0.d0)
+            val(m,i,ncol) = val(m,i,jbeg)
          end do
       enddo
       go to 499

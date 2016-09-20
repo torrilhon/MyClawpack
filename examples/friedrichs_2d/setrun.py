@@ -115,7 +115,7 @@ def setrun(claw_pkg='amrclaw'):
         # Output ntimes frames at equally spaced times up to tfinal:
         # Can specify num_output_times = 0 for no output
         clawdata.num_output_times = 10
-        clawdata.tfinal = 0.7
+        clawdata.tfinal = 3.0
         clawdata.output_t0 = True  # output at initial (or restart) time?
         
     elif clawdata.output_style == 2:
@@ -224,11 +224,11 @@ def setrun(claw_pkg='amrclaw'):
     #   2 or 'periodic' => periodic (must specify this at both boundaries)
     #   3 or 'wall'     => solid wall for systems where q(2) is normal velocity
     
-    clawdata.bc_lower[0] = 'wall'   # at xlower
-    clawdata.bc_upper[0] = 'wall'   # at xupper
+    clawdata.bc_lower[0] = 'user'   # at xlower
+    clawdata.bc_upper[0] = 'user'   # at xupper
 
-    clawdata.bc_lower[1] = 'wall'   # at ylower
-    clawdata.bc_upper[1] = 'wall'   # at yupper
+    clawdata.bc_lower[1] = 'user'   # at ylower
+    clawdata.bc_upper[1] = 'user'   # at yupper
                          
 
     # ---------------
