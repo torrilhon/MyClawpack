@@ -143,6 +143,7 @@ c     # negate the normal velocity:
       do 136 j = 1,ncol
          do 136 i=1,nxl
             val(2,i,j) = -val(2,i,j)
+            val(3,i,j) = -val(3,i,j)
   136    continue
       go to 199
 
@@ -199,6 +200,7 @@ c     # negate the normal velocity:
       do 236 j = 1,ncol
          do 236 i=ibeg,nrow
             val(2,i,j) = -val(2,i,j)
+            val(3,i,j) = -val(3,i,j)
   236    continue
       go to 299
    
@@ -253,6 +255,7 @@ c     # solid wall (assumes 3'rd component is velocity or momentum in y):      *
 c     # negate the normal velocity:
       do 336 j=1,nyb
          do 336 i=1,nrow
+            val(2,i,j) = -val(2,i,j)
             val(3,i,j) = -val(3,i,j)
   336    continue
       go to 399
@@ -283,6 +286,8 @@ c     # user definition:   (2 ghostcells required !!!              ** TOP **
             val(m,i,jbeg) = qtrue(m,xcell,0.d0,0.d0)
             val(m,i,ncol) = val(m,i,jbeg)
          end do
+         val(2,i,jbeg) = 1.d0
+         val(2,i,ncol) = 1.d0
       enddo
       go to 499
 
@@ -309,6 +314,7 @@ c     # solid wall (assumes 3'rd component is velocity or momentum in y):      *
 c     # negate the normal velocity:
       do 436 j=jbeg,ncol
          do 436 i=1,nrow
+            val(2,i,j) = 1.d0-val(2,i,j)
             val(3,i,j) = -val(3,i,j)
   436    continue
       go to 499
