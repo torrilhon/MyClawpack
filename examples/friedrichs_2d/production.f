@@ -6,13 +6,16 @@ c =========================================================
       implicit double precision(a-h,o-z)
       dimension    q(meqn)
       dimension prod(meqn)
-c     # source terms for 2d advaction equations
 c
       tau = 0.1
 c
-      prod(1) = 5*xi*xi - 5*yj*yj
-      prod(2) = -1.0/tau*q(2)
-      prod(3) = -1.0/tau*q(3)
+      prod(1) = 0.d0
+      prod(2) = 0.d0
+      prod(3) = 0.d0
+      prod(4) = -1.0/tau*q(4)
+      prod(5) = -1.0/tau*q(5)
+      prod(6) = -1.0/tau*q(6)
+      prod(7) = -1.0/tau*q(7)
 
       return
       end
