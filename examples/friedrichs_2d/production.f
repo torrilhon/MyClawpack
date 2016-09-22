@@ -6,8 +6,8 @@ c =========================================================
       implicit double precision(a-h,o-z)
       dimension    q(meqn)
       dimension prod(meqn)
-c
-      tau = 0.1
+
+      common /cparam/ tau
 c
       prod(1) = 0.d0
       prod(2) = 0.d0

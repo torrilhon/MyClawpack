@@ -10,7 +10,6 @@ c =========================================================
 
       dimension qstar(meqn)
       dimension prod(meqn)
-      common /cparam/ ubar,vbar
 c
 c     # 2-stage Runge-Kutta method
 c

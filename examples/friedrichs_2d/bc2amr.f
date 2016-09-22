@@ -79,8 +79,6 @@ c ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
       implicit double precision (a-h,o-z)
 
-      common /cparam/ ubar,vbar
-
       dimension val(meqn,nrow,ncol), aux(naux,nrow,ncol)
 
       hxmarg = hx*.01
@@ -111,9 +109,12 @@ c
   100 continue
 c     # user definition:  (2 ghostcells required !!!)              ** LEFT **
       do j = 1,ncol
-         ycell = ylo_patch + (j-0.5d0)*hy
          do m=1,meqn
-            val(m,nxl,j) = qtrue(m,0.d0,ycell,0.d0)
+            val(m,nxl,j) = val(m,nxl+1,j)
+         end do
+         val(2,nxl,j) = -val(2,nxl,j)
+         val(3,nxl,j) = -val(3,nxl,j)
+         do m=1,meqn
             val(m,1,j) = val(m,nxl,j)
          end do
       enddo      
@@ -168,9 +169,12 @@ c
   200 continue
 c     # user definition:  (2 ghostcells required !!!)              ** RIGHT **
       do j = 1,ncol
-         ycell = ylo_patch + (j-0.5d0)*hy
          do m=1,meqn
-            val(m,ibeg,j) = qtrue(m,0.d0,ycell,0.d0)
+            val(m,ibeg,j) = val(m,ibeg-1,j)
+         end do
+         val(2,ibeg,j) = -val(2,ibeg,j)
+         val(3,ibeg,j) = -val(3,ibeg,j)
+         do m=1,meqn
             val(m,nrow,j) = val(m,ibeg,j)
          end do
       enddo      
@@ -224,9 +228,12 @@ c
   300 continue
 c     # user definition:   (2 ghostcells required !!!              ** BOTTOM **
       do i = 1,nrow
-         xcell = xlo_patch + (i-0.5d0)*hx
          do m=1,meqn
-            val(m,i,nyb) = qtrue(m,xcell,0.d0,0.d0)
+            val(m,i,nyb) = val(m,i,nyb+1)
+         end do
+         val(2,i,nyb) = -val(2,i,nyb)
+         val(3,i,nyb) = -val(3,i,nyb)
+         do m=1,meqn
             val(m,i,1) = val(m,i,nyb)
          end do
       enddo
@@ -281,13 +288,14 @@ c
   400 continue
 c     # user definition:   (2 ghostcells required !!!              ** TOP **
       do i = 1,nrow
-         xcell = xlo_patch + (i-0.5d0)*hx
          do m=1,meqn
-            val(m,i,jbeg) = qtrue(m,xcell,0.d0,0.d0)
+            val(m,i,jbeg) = val(m,i,jbeg-1)
+         end do
+         val(2,i,jbeg) = 2.d0-val(2,i,jbeg)
+         val(3,i,jbeg) = -val(3,i,jbeg)
+         do m=1,meqn
             val(m,i,ncol) = val(m,i,jbeg)
          end do
-         val(2,i,jbeg) = 1.d0
-         val(2,i,ncol) = 1.d0
       enddo
       go to 499
 
@@ -314,7 +322,7 @@ c     # solid wall (assumes 3'rd component is velocity or momentum in y):      *
 c     # negate the normal velocity:
       do 436 j=jbeg,ncol
          do 436 i=1,nrow
-            val(2,i,j) = 1.d0-val(2,i,j)
+            val(2,i,j) = 2.d0-val(2,i,j)
             val(3,i,j) = -val(3,i,j)
   436    continue
       go to 499

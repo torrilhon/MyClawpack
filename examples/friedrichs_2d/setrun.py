@@ -37,8 +37,7 @@ def setrun(claw_pkg='amrclaw'):
     #------------------------------------------------------------------
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
-    probdata.add_param('u',     1.0,  'ubar advection velocity')
-    probdata.add_param('v',     0.5,  'vbar advection velocity')
+    probdata.add_param('tau',     0.2,  'relaxation parameter')
     
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -114,8 +113,8 @@ def setrun(claw_pkg='amrclaw'):
     if clawdata.output_style==1:
         # Output ntimes frames at equally spaced times up to tfinal:
         # Can specify num_output_times = 0 for no output
-        clawdata.num_output_times = 30
-        clawdata.tfinal = 6.0
+        clawdata.num_output_times = 40
+        clawdata.tfinal = 4.0
         clawdata.output_t0 = True  # output at initial (or restart) time?
         
     elif clawdata.output_style == 2:
@@ -224,11 +223,11 @@ def setrun(claw_pkg='amrclaw'):
     #   2 or 'periodic' => periodic (must specify this at both boundaries)
     #   3 or 'wall'     => solid wall for systems where q(2) is normal velocity
     
-    clawdata.bc_lower[0] = 'wall'   # at xlower
-    clawdata.bc_upper[0] = 'wall'   # at xupper
+    clawdata.bc_lower[0] = 'user'   # at xlower
+    clawdata.bc_upper[0] = 'user'   # at xupper
 
-    clawdata.bc_lower[1] = 'wall'   # at ylower
-    clawdata.bc_upper[1] = 'wall'   # at yupper
+    clawdata.bc_lower[1] = 'user'   # at ylower
+    clawdata.bc_upper[1] = 'user'   # at yupper
                          
 
     # ---------------
