@@ -20,7 +20,7 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
 ! Note that the i'th Riemann problem has left state qr(:,i-1)
 !                                    and right state ql(:,i)
 ! From the basic clawpack routines, this routine is called with ql = qr
-! maux=0 and aux arrays are unused in this example.
+! maux=0 and aux arrays are unused in this example. 
 
     implicit double precision (a-h,o-z)
 
