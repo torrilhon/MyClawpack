@@ -56,8 +56,8 @@ SOURCES = \
   bc2amr.f \
   src2.f \
   production.f \
-  $(MYCLAW)/riemann/src/rpn2_stokes.f \
-  $(MYCLAW)/riemann/src/rpt2_stokes.f \
+  rpn2_stokes.f \
+  rpt2_stokes.f \
 
 #-------------------------------------------------------------------
 # Include Makefile containing standard definitions and make options:
