@@ -52,7 +52,6 @@ MODULES = \
 
 SOURCES = \
   qinit.f \
-  qtrue.f \
   setprob.f \
   bc2amr.f \
   src2.f \

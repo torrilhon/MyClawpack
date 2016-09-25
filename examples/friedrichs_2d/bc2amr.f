@@ -79,10 +79,11 @@ c ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
       implicit double precision (a-h,o-z)
 
-      common /cparam/ ubar,vbar
-
       dimension val(meqn,nrow,ncol), aux(naux,nrow,ncol)
 
+      common /cparam/ tau, p1, p2
+
+      PI=4.d0*datan(1.d0)
       hxmarg = hx*.01
       hymarg = hy*.01
 
@@ -111,9 +112,11 @@ c
   100 continue
 c     # user definition:  (2 ghostcells required !!!)              ** LEFT **
       do j = 1,ncol
-         ycell = ylo_patch + (j-0.5d0)*hy
          do m=1,meqn
-            val(m,nxl,j) = qtrue(m,0.d0,ycell,0.d0)
+            val(m,nxl,j) = val(m,nxl+1,j)
+         end do
+         val(1,nxl,j) = -val(1,nxl,j)
+         do m=1,meqn
             val(m,1,j) = val(m,nxl,j)
          end do
       enddo      
@@ -169,7 +172,10 @@ c     # user definition:  (2 ghostcells required !!!)              ** RIGHT **
       do j = 1,ncol
          ycell = ylo_patch + (j-0.5d0)*hy
          do m=1,meqn
-            val(m,ibeg,j) = qtrue(m,0.d0,ycell,0.d0)
+            val(m,ibeg,j) = val(m,ibeg-1,j)
+         end do
+         val(1,ibeg,j) = 2.0*p2*sin(ycell*PI)-val(1,ibeg,j)
+         do m=1,meqn
             val(m,nrow,j) = val(m,ibeg,j)
          end do
       enddo      
@@ -222,9 +228,11 @@ c
   300 continue
 c     # user definition:   (2 ghostcells required !!!              ** BOTTOM **
       do i = 1,nrow
-         xcell = xlo_patch + (i-0.5d0)*hx
          do m=1,meqn
-            val(m,i,nyb) = qtrue(m,xcell,0.d0,0.d0)
+            val(m,i,nyb) = val(m,i,nyb+1)
+         end do
+         val(1,i,nyb) = -val(1,i,nyb)
+         do m=1,meqn
             val(m,i,1) = val(m,i,nyb)
          end do
       enddo
@@ -280,7 +288,10 @@ c     # user definition:   (2 ghostcells required !!!              ** TOP **
       do i = 1,nrow
          xcell = xlo_patch + (i-0.5d0)*hx
          do m=1,meqn
-            val(m,i,jbeg) = qtrue(m,xcell,0.d0,0.d0)
+            val(m,i,jbeg) = val(m,i,jbeg-1)
+         end do
+         val(1,i,jbeg) = 2.0*p1*sin(xcell*PI)-val(1,i,jbeg)
+         do m=1,meqn
             val(m,i,ncol) = val(m,i,jbeg)
          end do
       enddo

@@ -37,8 +37,9 @@ def setrun(claw_pkg='amrclaw'):
     #------------------------------------------------------------------
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
-    probdata.add_param('u',     1.0,  'ubar advection velocity')
-    probdata.add_param('v',     0.5,  'vbar advection velocity')
+    probdata.add_param('tau',    1.0,  'relaxation parameter')
+    probdata.add_param('p1',     1.0,  'boundary amplitude')
+    probdata.add_param('p2',     1.5,  'boundary amplitude')
     
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -114,8 +115,8 @@ def setrun(claw_pkg='amrclaw'):
     if clawdata.output_style==1:
         # Output ntimes frames at equally spaced times up to tfinal:
         # Can specify num_output_times = 0 for no output
-        clawdata.num_output_times = 30
-        clawdata.tfinal = 3.0
+        clawdata.num_output_times = 120
+        clawdata.tfinal = 12.0
         clawdata.output_t0 = True  # output at initial (or restart) time?
         
     elif clawdata.output_style == 2:
