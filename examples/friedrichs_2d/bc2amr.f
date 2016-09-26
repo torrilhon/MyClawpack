@@ -81,7 +81,7 @@ c ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
       dimension val(meqn,nrow,ncol), aux(naux,nrow,ncol)
 
-      common /cparam/ tau, p1, p2
+      common /cparam/ tau, p1, p2, fsource
 
       PI=4.d0*datan(1.d0)
       hxmarg = hx*.01
@@ -145,7 +145,7 @@ c     # solid wall (assumes 2'nd component is velocity or momentum in x):      *
 c     # negate the normal velocity:
       do 136 j = 1,ncol
          do 136 i=1,nxl
-            val(2,i,j) = -val(2,i,j)
+            val(1,i,j) = -val(1,i,j)
   136    continue
       go to 199
 
@@ -203,8 +203,9 @@ c     # solid wall (assumes 2'nd component is velocity or momentum in x):      *
   235       continue
 c     # negate the normal velocity:
       do 236 j = 1,ncol
+         ycell = ylo_patch + (j-0.5d0)*hy
          do 236 i=ibeg,nrow
-            val(2,i,j) = -val(2,i,j)
+            val(1,i,j) = 2.0*p2*sin(ycell*PI)-val(1,i,j)
   236    continue
       go to 299
    
@@ -261,7 +262,7 @@ c     # solid wall (assumes 3'rd component is velocity or momentum in y):      *
 c     # negate the normal velocity:
       do 336 j=1,nyb
          do 336 i=1,nrow
-            val(3,i,j) = -val(3,i,j)
+            val(1,i,j) = -val(1,i,j)
   336    continue
       go to 399
 
@@ -315,12 +316,13 @@ c     # solid wall (assumes 3'rd component is velocity or momentum in y):      *
       do 435 j=jbeg,ncol
          do 435 i=1,nrow
             do 435 m=1,meqn
-               val(m,i,j) =  val(m,i,2*jbeg-1-j)
+               val(m,i,j) = val(m,i,2*jbeg-1-j)
   435       continue
 c     # negate the normal velocity:
       do 436 j=jbeg,ncol
          do 436 i=1,nrow
-            val(3,i,j) = -val(3,i,j)
+            xcell = xlo_patch + (i-0.5d0)*hx
+            val(1,i,j) = 2.0*p1*sin(xcell*PI)-val(1,i,j)
   436    continue
       go to 499
 

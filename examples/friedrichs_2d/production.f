@@ -7,11 +7,9 @@ c =========================================================
       dimension    q(meqn)
       dimension prod(meqn)
 
-      common /cparam/ tau, p1, p2
+      common /cparam/ tau, p1, p2, fsource
 c
-c      tau = 0.1
-c
-      prod(1) = 0.d0
+      prod(1) = fsource
       prod(2) = -1.0/tau*q(2)
       prod(3) = -1.0/tau*q(3)
 

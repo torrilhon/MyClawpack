@@ -1,7 +1,7 @@
       subroutine setprob
       implicit double precision (a-h,o-z)
       character*25 fname
-      common /cparam/ tau,p1,p2
+      common /cparam/ tau,p1,p2, fsource
 c
       iunit = 7
       fname = 'setprob.data'
@@ -12,6 +12,7 @@ c     # comment lines starting with #:
       read(7,*) tau
       read(7,*) p1
       read(7,*) p2
+      read(7,*) fsource
 
       return
       end

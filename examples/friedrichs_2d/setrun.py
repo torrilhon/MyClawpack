@@ -38,8 +38,9 @@ def setrun(claw_pkg='amrclaw'):
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
     probdata.add_param('tau',    1.0,  'relaxation parameter')
-    probdata.add_param('p1',     1.0,  'boundary amplitude')
-    probdata.add_param('p2',     1.5,  'boundary amplitude')
+    probdata.add_param('p1',     0.0,  'boundary amplitude')
+    probdata.add_param('p2',     0.0,  'boundary amplitude')
+    probdata.add_param('fsource',     1.0,  'constant source term')
     
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -67,8 +68,8 @@ def setrun(claw_pkg='amrclaw'):
     clawdata.upper[1] = 1.          # yupper
     
     # Number of grid cells:
-    clawdata.num_cells[0] = 50      # mx
-    clawdata.num_cells[1] = 50      # my
+    clawdata.num_cells[0] = 200      # mx
+    clawdata.num_cells[1] = 200      # my
     
 
     # ---------------
@@ -274,7 +275,7 @@ def setrun(claw_pkg='amrclaw'):
 
 
     # max number of refinement levels:
-    amrdata.amr_levels_max = 3
+    amrdata.amr_levels_max = 1
 
     # List of refinement ratios at each level (length at least amr_level_max-1)
     amrdata.refinement_ratios_x = [2,2]
