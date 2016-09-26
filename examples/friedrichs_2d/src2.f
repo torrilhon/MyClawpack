@@ -14,15 +14,18 @@ c =========================================================
 c
 c     # 2-stage Runge-Kutta method
 c
-      dt2    = dt/2.d0
+      dt2    = dt/2.0
       ndim   = 2
 
-      do 10 i=1,mx
+      do 10 i=1-mbc,mx+mbc
        xi = xlower + (i-0.5d0)*dx
-       do 10 j=1,my
+       do 10 j=1-mbc,my+mbc
         yj = ylower + (j-0.5d0)*dy
         
-        call production(meqn,xi,yj,q,prod)
+        do m=1,meqn
+         qstar(m) = q(m,i,j)
+        end do
+        call production(meqn,xi,yj,qstar,prod)
         do m=1,meqn
          qstar(m) = q(m,i,j) + dt2 * prod(m)
         end do
