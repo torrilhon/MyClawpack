@@ -21,6 +21,10 @@ c
        do 10 j=1,my
         yj = ylower + (j-0.5d0)*dy
         
+        do m=1,meqn
+         qstar(m) = q(m,i,j)
+        end do
+        
         call production(meqn,xi,yj,q,prod)
         do m=1,meqn
          qstar(m) = q(m,i,j) + dt2 * prod(m)
