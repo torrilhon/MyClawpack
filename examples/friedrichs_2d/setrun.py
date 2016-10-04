@@ -37,7 +37,8 @@ def setrun(claw_pkg='amrclaw'):
     #------------------------------------------------------------------
 
     probdata = rundata.new_UserData(name='probdata',fname='setprob.data')
-    probdata.add_param('tau',     0.2,  'relaxation parameter')
+    probdata.add_param('tau',     1.0,  'relaxation parameter')
+    probdata.add_param('Re',      100.0,  'Renolds number')
     
     #------------------------------------------------------------------
     # Standard Clawpack parameters to be written to claw.data:
@@ -65,8 +66,8 @@ def setrun(claw_pkg='amrclaw'):
     clawdata.upper[1] = 1.          # yupper
     
     # Number of grid cells:
-    clawdata.num_cells[0] = 50      # mx
-    clawdata.num_cells[1] = 50      # my
+    clawdata.num_cells[0] = 100      # mx
+    clawdata.num_cells[1] = 100      # my
     
 
     # ---------------
@@ -113,8 +114,8 @@ def setrun(claw_pkg='amrclaw'):
     if clawdata.output_style==1:
         # Output ntimes frames at equally spaced times up to tfinal:
         # Can specify num_output_times = 0 for no output
-        clawdata.num_output_times = 40
-        clawdata.tfinal = 4.0
+        clawdata.num_output_times = 80
+        clawdata.tfinal = 8.0
         clawdata.output_t0 = True  # output at initial (or restart) time?
         
     elif clawdata.output_style == 2:
@@ -272,7 +273,7 @@ def setrun(claw_pkg='amrclaw'):
 
 
     # max number of refinement levels:
-    amrdata.amr_levels_max = 3
+    amrdata.amr_levels_max = 1
 
     # List of refinement ratios at each level (length at least amr_level_max-1)
     amrdata.refinement_ratios_x = [2,2]

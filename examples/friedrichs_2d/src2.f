@@ -25,12 +25,12 @@ c
          qstar(m) = q(m,i,j)
         end do
         
-        call production(meqn,xi,yj,q,prod)
+        call production(meqn,xi,yj,t,q,prod)
         do m=1,meqn
          qstar(m) = q(m,i,j) + dt2 * prod(m)
         end do
 
-        call production(meqn,xi,yj,qstar,prod)
+        call production(meqn,xi,yj,t+dt2,qstar,prod)
         do m=1,meqn
          q(m,i,j) = q(m,i,j) + dt * prod(m)
         end do

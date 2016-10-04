@@ -1,7 +1,7 @@
       subroutine setprob
       implicit double precision (a-h,o-z)
       character*25 fname
-      common /cparam/ tau
+      common /cparam/ tau, Re
 c
 c     # Set the relaxation parameter
 c     # These values are passed in a common block
@@ -14,6 +14,7 @@ c     # comment lines starting with #:
       call opendatafile(iunit, fname)
                 
       read(7,*) tau
+      read(7,*) Re
 
       return
       end

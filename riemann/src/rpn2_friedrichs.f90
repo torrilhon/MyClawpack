@@ -24,7 +24,7 @@ subroutine rpn2(ixy,maxm,meqn,mwaves,maux,mbc,mx,ql,qr,auxl,auxr,wave,s,amdq,apd
 
 
     implicit double precision (a-h,o-z)
-    common /cparam/ u,v
+    common /cparam/ tau, Re
 
     dimension wave(meqn, mwaves, 1-mbc:maxm+mbc)
     dimension    s(mwaves, 1-mbc:maxm+mbc)
